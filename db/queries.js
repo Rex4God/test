@@ -1,8 +1,8 @@
-const db = require('../db/connect')
+const dbConn = require('../db/connect')
 
 const findById = async (id, table) => {
     let status = false;
-    const resource = await db.query(`select * from ${table} where insertId=${id}`)
+    const resource = await dbConn.query(`select * from ${table} where insertId=${id}`)
     if(resource) {
         status = true;
         return {status: status, data: resource}
@@ -12,7 +12,7 @@ const findById = async (id, table) => {
 
 const create = async (data, table) => {
     let status = false;
-    const resource = await db.query(`insert into ${table} set ?`, data, function (error, results, fields) {
+    const resource = await dbConn.query(`insert into ${table} set ?`, data, function (error, results, fields) {
         if (error) {
             throw({message: error.message, code: 400});
         }
@@ -24,7 +24,7 @@ const create = async (data, table) => {
 
 const login = async (email) => {
     let status = false;
-    const resource = await db.query(`select * from user where email=${email}`)
+    const resource = await dbConn.query(`select * from user where email=${email}`)
     if(resource) {
         status = true;
         return {status: status, data: resource}

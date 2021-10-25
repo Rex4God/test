@@ -4,11 +4,9 @@ const morgan = require('morgan')
 require('./db/connect')
 require('dotenv').config()
 const index = require('./routes/index')
-const auth = require('./routes/auth')
 const user = require('./routes/user')
-const twit = require('./routes/twit')
+const twitRoute = require('./routes/twit')
 const comment = require('./routes/comment')
-
 
 // Middleware declarations
 app.use(express.static('./public'))
@@ -18,27 +16,12 @@ app.use(express.urlencoded({extended: false}))
 
 //route middleware declarations
 app.use('/index', index)
-app.use('/auth', auth)
-app.use('/user', user)
-app.use('/twit', twit)
-app.use('/comment', comment)
-
-
-//testing router configuration
-app.get('/', (req, res) => {
-    res.send('<h1> This is Twittee app</h1>')
-})
+app.use('/api/v1/user', user)
+app.use('/api/v1/twits',twitRoute)
+ app.use('/comment',comment)
 
 
 //SERVER DETAILS
 const port = process.env.PORT || 5000
-//
-// const start = async () => {
-//     try {
-//         await connectDB();
-        app.listen(port, console.log(`Server is listening at ${port}`))
-//     } catch (err) {
-//         console.log(err)
-//     }
-// }
-// start();
+
+app.listen(port, console.log(`Server is listening at ${port}`))

@@ -4,7 +4,7 @@ const {validateParameter} = require('../commons/util')
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('mysql::memory');
 
-const User = sequelize.define('User', {
+const User = sequelize.define('user', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
